@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src='../../../node_modules/vue/dist/vue.js'></script>
+</head>
+<body>
+  <div id='app'>
+    <div>{{message}}</div>
+  </div>
+  <script>
+    console.log( app ) // 打印出来的是含有message变量名的div
+    let app = new Vue({
+      el: '#app',
+      data: {
+        message: 'vue 渲染'
+      }
+    })
+    console.log( app ) // 两次打印出来的元素不一样 
+    //打印出来的是含有message 值 的div 
+    // 1指针放上去不高亮 2高亮 说明最后是替换了div元素的 
+    // 
+  </script>
+</body>
+</html>

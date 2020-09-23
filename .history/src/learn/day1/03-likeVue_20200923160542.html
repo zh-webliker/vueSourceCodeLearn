@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id='app'>
+    <div>{{message}}</div>
+    <div>
+      <div>
+        <p>{{name}} - {{message}}</p>
+      </div>
+    </div>
+  </div>
+  <script>
+    console.log(document.getElementById('app')) // 打印出来的是含有message变量名的div
+    // 1. 拿到模板
+    let tmpNode = document.getElementById('app')
+    // 2. 拿到数据（data）
+    const data = {
+      name: '小明',
+      message: '你好'
+    }
+    // 3. 将数据和模板结合， 得到新的html的元素
+      // 正则， replace
+
+      // 拿到子元素
+      // 遍历子节点，拿到含有{{}}的节点，取出{{}}里的值 (递归)
+      function getTmp (tmpNode, data) {
+        let childNode = tmpNode.childNodes
+        for (let i = 0; i < childNode.length; i++) {
+          if (childNode[i].nodeType === 1) { // 1是元素节点 3是文本节点
+            getTmp(childNode[i], data)
+          } else if (childNode[i].nodeType === 3) {
+            console.log(childNode[i].nodeValue) //拿到{{}}里的值
+            
+          }
+        }
+      }
+      getTmp(tmpNode, data)
+      
+    // 4. 替换到页面中
+    
+    //打印出来的是含有message 值 的div 
+    // 1指针放上去不高亮 2高亮 说明最后是替换了div元素的 
+  </script>
+</body>
+</html>
