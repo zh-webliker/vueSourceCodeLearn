@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id='root'>
+    <div>
+      <div>hello1</div>
+      <div>hello2</div>
+      <div>hello3</div>
+      <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+      </ul>
+    </div>
+  </div>
+  <script>
+    // 为什么使用虚拟dom? 性能
+    // <div> -> {tag: 'div'}
+    // 文本节点 -> {tag: undefined, value: ''}
+    // <div title='a' class='b'></div>  -> {tag: 'div', data: {title: a, class: 'b'}}
+    class Vnode {
+      constructor (tag, data, value, type) {
+        this.tag = tag
+        this.data = data
+        this.value = value
+        this.type = type
+        this.children = []
+      }
+      appendChild (vnode) {
+        this.children.push(vnode)
+      }
+    }
+  </script>
+</body>
+</html>

@@ -48,7 +48,7 @@
         let attrs = node.attributes //返回的是一个伪数组，需要转化成对象
         let attrObj = {}
         for (let i = 0; i < attrs.length; i++) { // 2属性节点， 
-          attrObj[attrs[i].nodeName] = attrs[i].nodeValue
+          attrObj[i.nodeName] = i.nodeValue
         }
         _vnode = new Vnode(nodeName, attrObj, undefined, nodeType)
         let childNode = node.childNodes

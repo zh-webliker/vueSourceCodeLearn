@@ -8,7 +8,7 @@
 </head>
 <body>
   <div id='root'>
-    <div class="box1" title="属性">
+    <div>
       <div>hello1</div>
       <div>hello2</div>
       <div>hello3</div>
@@ -39,28 +39,18 @@
       }
     }
     // Vue源码里使用栈结构，使用栈存储父元素
-    function getVnode (node) {
+    function  getVnode (node) {
       // 得到node的tag, attrs, value, type
-      let nodeType = node.nodeType
-      let _vnode = null
-      if (node.nodeType === 1) { // 元素
-        let nodeName = node.nodeName
-        let attrs = node.attributes //返回的是一个伪数组，需要转化成对象
-        let attrObj = {}
-        for (let i = 0; i < attrs.length; i++) { // 2属性节点， 
-          attrObj[attrs[i].nodeName] = attrs[i].nodeValue
-        }
-        _vnode = new Vnode(nodeName, attrObj, undefined, nodeType)
-        let childNode = node.childNodes
-        for (let i = 0; i < childNode.length; i++) {
-          _vnode.children.push( getVnode( childNode[i] ) )
-        }
-
+      let nodeType = nodeType
+      if (node.nodeType === 1) {
+        getVnode()
+        this.tag = node.tag
+        this.data = node.attarbuties
+        this.value = 
       } else if (node.nodeType === 3) {
-        _vnode = new Vnode(undefined, undefined, node.nodeValue, nodeType)
+        const value = node.value
       }
-      console.log(_vnode)
-      return _vnode
+
     }
     getVnode(document.querySelector('#root'))
   </script>

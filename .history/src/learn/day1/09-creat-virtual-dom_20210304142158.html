@@ -39,28 +39,20 @@
       }
     }
     // Vue源码里使用栈结构，使用栈存储父元素
-    function getVnode (node) {
+    function  getVnode (node) {
       // 得到node的tag, attrs, value, type
       let nodeType = node.nodeType
-      let _vnode = null
       if (node.nodeType === 1) { // 元素
-        let nodeName = node.nodeName
+        this.tag = node.nodeName
         let attrs = node.attributes //返回的是一个伪数组，需要转化成对象
         let attrObj = {}
-        for (let i = 0; i < attrs.length; i++) { // 2属性节点， 
-          attrObj[attrs[i].nodeName] = attrs[i].nodeValue
+        for (let i = 0; i < attrs.length; i++) { // 
+          // this.data[]
         }
-        _vnode = new Vnode(nodeName, attrObj, undefined, nodeType)
-        let childNode = node.childNodes
-        for (let i = 0; i < childNode.length; i++) {
-          _vnode.children.push( getVnode( childNode[i] ) )
-        }
-
       } else if (node.nodeType === 3) {
-        _vnode = new Vnode(undefined, undefined, node.nodeValue, nodeType)
+        const value = node.value
       }
-      console.log(_vnode)
-      return _vnode
+
     }
     getVnode(document.querySelector('#root'))
   </script>
