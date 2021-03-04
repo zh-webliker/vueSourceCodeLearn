@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id='app'>
+    <div>{{message}}</div>
+    <div>
+      <div>
+        <p>{{name}} - {{message}}</p>
+      </div>
+    </div>
+  </div>
+  <script>
+    // 代码整合
+    function JGVue( options ) {
+      // 内部数据使用下划线开头，只读数据$开头
+      this._data = options.data
+      this._el = options.el
+      
+      // 准备工作（模板）
+      this.$el = document.querySelector(options.el)
+
+    }
+    // 将模板结合数据，得到HTML加到页面中
+    JGVue.prototype.render = function () {
+
+    }
+    // 编译 将模板和数据结合，得到真正的DOM元素
+    JGVue.prototype.compiler = function () {
+
+    }
+    // 将DOM放入页面中去
+    JGVue.prototype.updata = function () {
+      
+    }
+    let app = new JGVue({
+      el: '#app',
+      data: {
+        name: 'jim',
+        message: 'info'
+      }
+    })
+  </script>
+</body>
+</html>

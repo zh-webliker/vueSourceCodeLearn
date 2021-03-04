@@ -28,11 +28,11 @@
 
       // 拿到子元素
       // 遍历子节点，拿到含有{{}}的节点，取出{{}}里的值 (递归)
-      function compile (tmpNode, data) {
+      function getTmp (tmpNode, data) {
         let childNode = tmpNode.childNodes
         for (let i = 0; i < childNode.length; i++) {
           if (childNode[i].nodeType === 1) { // 1是元素节点 3是文本节点
-            compile(childNode[i], data)
+            getTmp(childNode[i], data)
           } else if (childNode[i].nodeType === 3) {//拿到{{}}里的值
             let txt = childNode[i].nodeValue
             const patt = /\{\{(.+?)\}\}/g
@@ -44,23 +44,23 @@
           }
         }
       }
-      // compile(tmpNode, data) 传入的是页面获取的节点
+      // getTmp(tmpNode, data) 传入的是页面获取的节点
       // console.log(tmpNode)
       // 此时打印出的tmpNode与之前打印的是同一个 
       // 由于元素是引用类型，所以dom节点值变化会造成模板变化
       // 但是当data里的值变化的时候，模板要重新渲染，此时再要拿到模板时已经没有{{}}了
       // 所以需要clone一份节点，替换模板
       const tmpNodeClone = tmpNode.cloneNode(true) // clone节点，参数true为深拷贝
-      compile(tmpNodeClone, data)
+      getTmp(tmpNodeClone, data)
       console.log(tmpNodeClone)
       // 4. 替换到页面中
       tmpNode.parentNode.replaceChild(tmpNodeClone, tmpNode) // 替换子元素，参数1：新内容；参数二：旧neirong
 
       // 这种方式实现存在很多问题
-      // 这里实现是传入dom，vue源码是传入一个字符串，编译字符串 -> vnode -> 替换  （为什么使用，怎么转化成虚拟dom，怎么把虚拟dom转化成真正的dom）
-      // {{}}可能还存在message.age 这种 (函数柯里化)
+      // 这里实现是传入dom，vue源码是传入一个字符串，编译字符串 -> vnode -> 替换
+      // {{}}可能还存在message.age 这种
       // 代码整合
-      
+
   </script>
 </body>
 </html>

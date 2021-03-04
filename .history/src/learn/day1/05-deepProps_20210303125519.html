@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id='app'>
+    <div>{{name.firstName}}-{{name.lastName}}</div>
+  </div>
+  <script>
+    // 代码整合
+    function compile (tmpNode, data) {
+      let childNode = tmpNode.childNodes
+      for (let i = 0; i < childNode.length; i++) {
+        if (childNode[i].nodeType === 1) { // 1是元素节点 3是文本节点
+          compile(childNode[i], data)
+        } else if (childNode[i].nodeType === 3) {//拿到{{}}里的值
+          let txt = childNode[i].nodeValue
+          const patt = /\{\{(.+?)\}\}/g
+          txt = txt.replace(patt, (e, value) => {
+            // value 可能拿到的是a.b.c.d 此时要解决的问题就是通过字符串能访问深层属性
+            // let key = value.grim()
+            // return data[value]
+            return getValueByPath(data, value)
+          })
+          childNode[i].nodeValue = txt
+        }
+      }
+    }
+    function JGVue( options ) {
+      // 内部数据使用下划线开头，只读数据$开头
+      this._data = options.data
+      this._el = options.el
+      
+      // 准备工作（模板）
+      this.$el = this._templateDOM = document.querySelector(this._el)
+      this._parent = this._templateDOM.parentNode
+      this.render()
+    }
+    // 将模板结合数据，得到HTML加到页面中
+    JGVue.prototype.render = function () {
+      this.compiler()
+    }
+    // 编译 将模板和数据结合，得到真正的DOM元素
+    JGVue.prototype.compiler = function () {
+      let realHTMLDOM = this._templateDOM.cloneNode(true) // 拷贝一个模板
+      compile(realHTMLDOM, this._data)
+      this.updata(realHTMLDOM)
+    }
+    // 将DOM放入页面中去
+    JGVue.prototype.updata = function (real) {
+      this._parent.replaceChild(real, document.querySelector('#app'))
+    }
+    let app = new JGVue({
+      el: '#app',
+      data: {
+        name: {
+          firstName: '张',
+          lastName: '三丰'
+        }
+      }
+    })
+
+    function getValueByPath (obj, path) {
+      let paths = path.split('.')
+      let res = obj
+      let prop;
+      while( prop = paths.shift()) {
+        res = res[prop]
+      }
+      return res
+    }
+  </script>
+</body>
+</html>

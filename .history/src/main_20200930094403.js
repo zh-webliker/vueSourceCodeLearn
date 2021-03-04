@@ -30,10 +30,7 @@ new YourVue({
   `,
   methods: {
     addCount () {
-      const count = this.count + 1
-      this.setState({
-        count
-      })
+      this
     }
   }
 })
