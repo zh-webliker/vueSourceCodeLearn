@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function sub_curry(fn) {
+        var args = [].slice.call(arguments, 1);
+        return function() {
+            return fn.apply(this, args.concat([].slice.call(arguments)));
+        };
+    }
+
+    function curry(fn, length) {
+        length = length || fn.length;
+        var slice = Array.prototype.slice;
+        console.log(arguments.length)
+        return function() {
+            debugger
+            console.log(arguments)
+            console.log(arguments.length)
+            if (arguments.length < length) {
+                var combined = [fn].concat(slice.call(arguments));
+                return curry(sub_curry.apply(this, combined), length - arguments.length);
+            } else {
+                return fn.apply(this, arguments);
+            }
+        };
+    }
+
+    var fn = curry(function(a, b, c) {
+        return [a, b, c];
+    });
+    fn("a", "b", "c")
+    // function (a, b, c) {
+    //   return [a, b, c]
+    // }.apply(this, arguments)
+
+    fn("a")("b")('2')
+
+
+
+    // function sub_curry(fn){
+    //     return function(){
+    //         return fn()
+    //     }
+    // }
+
+    // function curry(fn, length){
+    //     length = length || 4;
+    //     return function(){
+    //         if (length > 1) {
+    //             return curry(sub_curry(fn), --length)
+    //         }
+    //         else {
+    //             return fn()
+    //         }
+    //     }
+    // }
+
+    // var fn0 = function(){
+    //     console.log(1)
+    // }
+
+    // var fn1 = curry(fn0)
+    // console.log(fn1)
+    // fn1()()()() // 1
+
+    // curry(sub_curry(fn), --length)  // function () { return fn0() }
+    // curry(function () { return fn() }, 3)
+
+    // curry(function () { return fn() }, 3)()
+    // curry(sub_curry(fn), 2) //function () { return function () { return fn0() } }
+
+    // curry(function () { return function () { return fn() } }, 2)
+    // curry(sub_curry(fn), 2) // function () {return function () {return function () {return fn0()}}}
+
+    // fn()()()()
+
+
+    // var fn0 = function (a, b, c, d) {
+    //   return [a, b, c, d]
+    // }
+    // var fn1 = curry(fn0)
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // function sub_curry(fn) {
+    //     var args = [].slice.call(arguments, 1);
+    //     return function() {
+    //         return fn.apply(this, args.concat([].slice.call(arguments)));
+    //     };
+    // }
+
+    // function curry(fn, length) {
+    //     length = length || fn.length;
+    //     console.log(fn.length, length)
+    //     var slice = Array.prototype.slice;
+    //     return function() {
+    //         console.log(arguments.length)
+    //         if (arguments.length < length) {
+    //             var combined = [fn].concat(slice.call(arguments));
+    //             return curry(sub_curry.apply(this, combined), length - arguments.length);
+    //         } else {
+    //             return fn.apply(this, arguments);
+    //         }
+    //     };
+    // }
+
+    // var fn = curry(function(a, b, c) {
+    //     return [a, b, c];
+    // });
+    // fn("a", "b", "c")
+    // fn("a")("b", "c")
+
+    function sub_curry(fn){
+        return function(){
+            return fn()
+        }
+    }
+
+    function curry(fn, length){
+        length = length || 4;
+        return function(){
+            if (length > 1) {
+                return curry(sub_curry(fn), --length)
+            }
+            else {
+                return fn()
+            }
+        }
+    }
+
+    var fn0 = function(){
+        console.log(1)
+    }
+
+    var fn1 = curry(fn0)
+    console.log(fn1)
+    debugger
+    fn1()()()() // 1
+  </script>
+</body>
+</html>

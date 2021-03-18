@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    函数柯里化就是 把接收多个参数的函数 转化成 接收单个参数的函数
+    类似与链式调用的思想，通过不断返回函数，使得可以执行多个'(...args)'，在适当的时候返回结果
+  </div>
+  <script>
+    // 问题1
+    var a = function(a, b, c) {
+      return [a, b, c]
+    }
+    a.length // 为3为什么
+    // length 是函数对象的一个属性值，指该函数有多少个必须要传入的参数，即形参的个数。
+    // 形参的数量不包括剩余参数个数，仅包括第一个具有默认值之前的参数个数。
+  </script>
+</body>
+</html>
